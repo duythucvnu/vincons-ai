@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  yolo26_trainer:
+    build: .
+    container_name: yolo26_train_container
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+              
+    volumes:
+      - ./dataset:/usr/src/app/dataset
+      - ./runs:/usr/src/app/runs
+      
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
