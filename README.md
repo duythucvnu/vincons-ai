@@ -2,7 +2,7 @@
 
 Concise deployment guide to run and integrate the training pipeline.
 
-## Directory Structure
+## Directory
 
 ```text
 vincons-ai/
