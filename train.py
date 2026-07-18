@@ -27,7 +27,6 @@ def main():
         lr0=0.001,
         weight_decay=0.005,
         patience=20,
-        project="runs/detect",
         name="vin_construction_yolo26s",
         exist_ok=True,
     )
