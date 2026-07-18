@@ -13,7 +13,7 @@ def main():
 
     model.train(
         data="dataset/data.yaml",
-        epochs=100,
+        epochs=5,
         imgsz=640,
         device=0,
         freeze=10,
