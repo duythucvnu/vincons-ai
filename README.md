@@ -65,10 +65,15 @@ nohup python3 sam.py > api.log 2>&1 &
 ### Additional Information
 
 Interactive Swagger Documentation: http://<SERVER_IP>:8000/docs
+
 Endpoint URL: POST http://<SERVER_IP>:8000/predict-sam3
+
 Headers: Content-Type: multipart/form-data
+
 Form-Data Fields:
+
 image: File (Binary image upload)
+
 prompts: String (Accepts both JSON arrays like ["person", "crane"] or comma-separated strings like person, crane, supply platform)
 
 Link model SAM3: https://drive.google.com/drive/folders/1nv4xJkZzplog01zqylYsjMxHuQydSFjp?usp=sharing
