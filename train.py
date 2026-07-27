@@ -8,7 +8,7 @@ from botocore.client import Config
 from ultralytics import YOLO
 
 MINIO_CONF = {
-    "endpoint": "157.66.100.182:9001",
+    "endpoint": "157.66.100.182:9000",
     "access_key": "5ivWMdFo5QGKCD2FcHOf",
     "secret_key": "l370OvFrPikCrYioFBZNbWv89r48q7DPee0HS2UQ",
     "bucket_name": "ai-data"
@@ -23,12 +23,17 @@ LOCAL_WEIGHTS_PATH = "runs/detect/vin_construction_yolo26s/weights/best.pt"
 
 
 def get_s3_client():
+    endpoint = MINIO_CONF["endpoint"]
+    
+    if not endpoint.startswith("http://") and not endpoint.startswith("https://"):
+        endpoint = f"http://{endpoint}"
+        
     return boto3.client(
-        "s3",
-        endpoint_url=MINIO_CONF["endpoint"],
+        's3',
+        endpoint_url=endpoint,
         aws_access_key_id=MINIO_CONF["access_key"],
         aws_secret_access_key=MINIO_CONF["secret_key"],
-        config=Config(signature_version="s3v4"),
+        config=Config(signature_version='s3v4')
     )
 
 
