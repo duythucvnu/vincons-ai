@@ -8,7 +8,7 @@ from botocore.client import Config
 from ultralytics import YOLO
 
 MINIO_CONF = {
-    "endpoint": "157.66.100.182:9000",
+    "endpoint": "157.66.100.182:9001",
     "access_key": "5ivWMdFo5QGKCD2FcHOf",
     "secret_key": "l370OvFrPikCrYioFBZNbWv89r48q7DPee0HS2UQ",
     "bucket_name": "ai-data"
