@@ -1,2 +1,3 @@
 *.pt
+telebot_runner.py
 venv/
