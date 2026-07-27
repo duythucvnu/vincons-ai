@@ -16,7 +16,7 @@ MINIO_CONF = {
 
 DATASET_ZIP_NAME = "dataset.zip"
 LOCAL_ZIP_PATH = "dataset.zip"
-EXTRACT_DIR = "dataset"
+EXTRACT_DIR = "."
 
 OUTPUT_MODEL_NAME = "models/best.pt"
 LOCAL_WEIGHTS_PATH = "runs/detect/vin_construction_yolo26s/weights/best.pt"
