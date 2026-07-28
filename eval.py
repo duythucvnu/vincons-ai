@@ -14,8 +14,8 @@ MINIO_CONF = {
 }
 DATASET_ZIP_NAME = "dataset.zip"
 LOCAL_ZIP_PATH = "dataset.zip"
-EXTRACT_DIR = "dataset"
-DATA_YAML = "dataset/data.yaml"
+EXTRACT_DIR = "."
+DATA_YAML = "./dataset/data.yaml"
 
 PAST_MODEL = "past.pt"
 NOW_MODEL = "now.pt"
@@ -106,7 +106,7 @@ def main():
         )
 
     print("\n" + "=" * 60)
-    print("BÁO CÁO THAY ĐỔI HIỆU NĂNG MÔ HÌNH (V100 Server)")
+    print("BÁO CÁO THAY ĐỔI HIỆU NĂNG MÔ HÌNH")
     print(
         f"Precision: {m_past['precision'] * 100:.1f}% -> "
         f"{m_now['precision'] * 100:.1f}% ({fmt(d_precision)})"
