@@ -14,7 +14,7 @@ MINIO_CONF = {
 }
 DATASET_ZIP_NAME = "dataset.zip"
 LOCAL_ZIP_PATH = "dataset.zip"
-EXTRACT_DIR = "."
+EXTRACT_DIR = "./dataset"
 DATA_YAML = "./dataset/data.yaml"
 
 PAST_MODEL = "past.pt"
@@ -50,7 +50,7 @@ def download_assets():
     with zipfile.ZipFile(LOCAL_ZIP_PATH, "r") as zip_ref:
         zip_ref.extractall(EXTRACT_DIR)
 
-    print(f"Giải nén hoàn tất vào thư mục cục bộ: '{EXTRACT_DIR}/dataset'")
+    print(f"Giải nén hoàn tất vào thư mục cục bộ: '{EXTRACT_DIR}'")
 
     if os.path.exists(LOCAL_ZIP_PATH):
         os.remove(LOCAL_ZIP_PATH)
