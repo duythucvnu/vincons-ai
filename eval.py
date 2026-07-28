@@ -44,18 +44,20 @@ def download_assets():
     s3.download_file(Bucket=bucket, Key="models/now.pt", Filename=NOW_MODEL)
     print("Tải mô hình thành công.", flush=True)
 
-    if not os.path.exists(DATA_YAML):
+    if not os.path.lexists(DATA_YAML):
         print("Cảnh báo: Không tìm thấy dataset cục bộ. Đang tải tự động từ MinIO...", flush=True)
         s3.download_file(Bucket=bucket, Key=DATASET_ZIP_NAME, Filename=LOCAL_ZIP_PATH)
 
-        if os.path.exists(EXTRACT_DIR):
-            if not os.path.isdir(EXTRACT_DIR) or os.path.islink(EXTRACT_DIR):
-                print(f"Phát hiện tệp/liên kết trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...")
-                import shutil
-                if os.path.isdir(EXTRACT_DIR):
-                    shutil.rmtree(EXTRACT_DIR)
-                else:
+        if os.path.lexists(EXTRACT_DIR):
+            print(f"Phát hiện tệp/liên kết trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...", flush=True)
+            import shutil
+            if os.path.isdir(EXTRACT_DIR) and not os.path.islink(EXTRACT_DIR):
+                shutil.rmtree(EXTRACT_DIR)
+            else:
+                try:
                     os.remove(EXTRACT_DIR)
+                except Exception:
+                    shutil.rmtree(EXTRACT_DIR)
 
         os.makedirs(EXTRACT_DIR, exist_ok=True)
 
@@ -64,7 +66,6 @@ def download_assets():
 
         os.remove(LOCAL_ZIP_PATH)
         print("Tải và giải nén dữ liệu kiểm định thành công.", flush=True)
-
 
 def evaluate_model(model_path):
     print(f"Đang kiểm định mô hình: {model_path}...", flush=True)
