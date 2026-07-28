@@ -14,7 +14,7 @@ MINIO_CONF = {
 }
 DATASET_ZIP_NAME = "dataset.zip"
 LOCAL_ZIP_PATH = "dataset.zip"
-EXTRACT_DIR = "./dataset"
+EXTRACT_DIR = "."
 DATA_YAML = "./dataset/data.yaml"
 
 PAST_MODEL = "past.pt"
@@ -36,36 +36,24 @@ def get_s3_client():
 
 
 def download_assets():
+    print("Đang kết nối MinIO và tự động tải tập dữ liệu...")
     s3 = get_s3_client()
-    bucket = MINIO_CONF["bucket_name"]
 
-    print("BƯỚC 1: Đang tải 2 file mô hình từ MinIO về đối sánh...", flush=True)
-    s3.download_file(Bucket=bucket, Key="models/past.pt", Filename=PAST_MODEL)
-    s3.download_file(Bucket=bucket, Key="models/now.pt", Filename=NOW_MODEL)
-    print("Tải mô hình thành công.", flush=True)
+    s3.download_file(
+        Bucket=MINIO_CONF["bucket_name"],
+        Key=DATASET_ZIP_NAME,
+        Filename=LOCAL_ZIP_PATH,
+    )
 
-    if not os.path.lexists(DATA_YAML):
-        print("Cảnh báo: Không tìm thấy dataset cục bộ. Đang tải tự động từ MinIO...", flush=True)
-        s3.download_file(Bucket=bucket, Key=DATASET_ZIP_NAME, Filename=LOCAL_ZIP_PATH)
+    print("Tải tập dữ liệu thành công. Đang tiến hành giải nén...")
 
-        if os.path.lexists(EXTRACT_DIR):
-            print(f"Phát hiện tệp trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...", flush=True)
-            import shutil
-            if os.path.isdir(EXTRACT_DIR) and not os.path.islink(EXTRACT_DIR):
-                shutil.rmtree(EXTRACT_DIR)
-            else:
-                try:
-                    os.remove(EXTRACT_DIR)
-                except Exception:
-                    shutil.rmtree(EXTRACT_DIR)
+    with zipfile.ZipFile(LOCAL_ZIP_PATH, "r") as zip_ref:
+        zip_ref.extractall(EXTRACT_DIR)
 
-        os.makedirs(EXTRACT_DIR, exist_ok=True)
+    print(f"Giải nén hoàn tất vào thư mục cục bộ: '{EXTRACT_DIR}/'")
 
-        with zipfile.ZipFile(LOCAL_ZIP_PATH, "r") as zip_ref:
-            zip_ref.extractall(EXTRACT_DIR)
-
+    if os.path.exists(LOCAL_ZIP_PATH):
         os.remove(LOCAL_ZIP_PATH)
-        print("Tải và giải nén dữ liệu kiểm định thành công.", flush=True)
 
 def evaluate_model(model_path):
     print(f"Đang kiểm định mô hình: {model_path}...", flush=True)
