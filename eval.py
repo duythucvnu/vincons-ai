@@ -39,20 +39,29 @@ def download_assets():
     s3 = get_s3_client()
     bucket = MINIO_CONF["bucket_name"]
 
-    print("Đang tải 2 file mô hình từ MinIO về đối sánh...", flush=True)
+    print("BƯỚC 1: Đang tải 2 file mô hình từ MinIO về đối sánh...", flush=True)
     s3.download_file(Bucket=bucket, Key="models/past.pt", Filename=PAST_MODEL)
     s3.download_file(Bucket=bucket, Key="models/now.pt", Filename=NOW_MODEL)
     print("Tải mô hình thành công.", flush=True)
 
     if not os.path.exists(DATA_YAML):
-        print("Không tìm thấy dataset cục bộ. Đang tải tự động từ MinIO...", flush=True)
-        s3.download_file(
-            Bucket=bucket,
-            Key=DATASET_ZIP_NAME,
-            Filename=LOCAL_ZIP_PATH
-        )
+        print("Cảnh báo: Không tìm thấy dataset cục bộ. Đang tải tự động từ MinIO...", flush=True)
+        s3.download_file(Bucket=bucket, Key=DATASET_ZIP_NAME, Filename=LOCAL_ZIP_PATH)
+
+        if os.path.exists(EXTRACT_DIR):
+            if not os.path.isdir(EXTRACT_DIR) or os.path.islink(EXTRACT_DIR):
+                print(f"Phát hiện tệp/liên kết trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...")
+                import shutil
+                if os.path.isdir(EXTRACT_DIR):
+                    shutil.rmtree(EXTRACT_DIR)
+                else:
+                    os.remove(EXTRACT_DIR)
+
+        os.makedirs(EXTRACT_DIR, exist_ok=True)
+
         with zipfile.ZipFile(LOCAL_ZIP_PATH, "r") as zip_ref:
             zip_ref.extractall(EXTRACT_DIR)
+
         os.remove(LOCAL_ZIP_PATH)
         print("Tải và giải nén dữ liệu kiểm định thành công.", flush=True)
 
