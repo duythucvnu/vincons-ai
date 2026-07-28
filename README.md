@@ -12,8 +12,8 @@ vincons-ai/
 ├── train.py                # YOLO26s training script
 ├── sam.py                  # SAM 3 FastAPI Service (Auto-labeling API)
 ├── sam3.pt                 # [Local Only] SAM 3 model weight file
-├── dataset/                # [Local Only] Place raw images & labels here
-└── runs/                   # [Local Only] Output weights
+├── runs/                   # [Local Only] Output weights
+└── dataset/                # [Local Only] Place raw images & labels here
 ```
 
 ## Setup
@@ -29,6 +29,13 @@ pip install -r requirements.txt
 ## YOLO26s Training Pipeline
 
 ### 1. Prepare the dataset
+```text
+dataset/                
+├── train/
+├── valid/
+├── test/
+└── data.yaml
+```
 
 Create `dataset/data.yaml`:
 
