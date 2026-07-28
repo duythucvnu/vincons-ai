@@ -49,7 +49,7 @@ def download_assets():
         s3.download_file(Bucket=bucket, Key=DATASET_ZIP_NAME, Filename=LOCAL_ZIP_PATH)
 
         if os.path.lexists(EXTRACT_DIR):
-            print(f"Phát hiện tệp/liên kết trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...", flush=True)
+            print(f"Phát hiện tệp trùng tên '{EXTRACT_DIR}', đang tiến hành dọn dẹp...", flush=True)
             import shutil
             if os.path.isdir(EXTRACT_DIR) and not os.path.islink(EXTRACT_DIR):
                 shutil.rmtree(EXTRACT_DIR)
