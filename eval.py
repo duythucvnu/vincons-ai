@@ -50,7 +50,7 @@ def download_assets():
     with zipfile.ZipFile(LOCAL_ZIP_PATH, "r") as zip_ref:
         zip_ref.extractall(EXTRACT_DIR)
 
-    print(f"Giải nén hoàn tất vào thư mục cục bộ: '{EXTRACT_DIR}/'")
+    print(f"Giải nén hoàn tất vào thư mục cục bộ: '{EXTRACT_DIR}/dataset'")
 
     if os.path.exists(LOCAL_ZIP_PATH):
         os.remove(LOCAL_ZIP_PATH)
