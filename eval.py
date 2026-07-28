@@ -14,7 +14,7 @@ MINIO_CONF = {
 }
 DATASET_ZIP_NAME = "dataset.zip"
 LOCAL_ZIP_PATH = "dataset.zip"
-EXTRACT_DIR = "."
+EXTRACT_DIR = "./dataset"
 DATA_YAML = "./dataset/data.yaml"
 
 PAST_MODEL = "past.pt"
