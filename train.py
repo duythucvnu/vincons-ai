@@ -100,7 +100,7 @@ def main():
     model = YOLO("yolo26s.pt")
 
     model.train(
-        data=os.path.join(EXTRACT_DIRt, "/dataset/data.yaml"),
+        data=os.path.join(EXTRACT_DIR, "/dataset/data.yaml"),
         epochs=100,
         imgsz=640,
         device=0 if torch.cuda.is_available() else "cpu",
